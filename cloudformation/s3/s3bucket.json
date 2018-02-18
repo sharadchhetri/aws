@@ -1,0 +1,19 @@
+
+{
+  "Parameters" : {
+    "s3bucketname" : {
+      "Description" : "Give unique S3 Bucket Name",
+      "Type" : "AWS::S3::Bucket"
+    }
+    },
+
+  "Resources" : {
+    "S3BucketNameOne" : {
+      "Type" : "AWS::S3::Bucket",
+      "Properties" : {
+        "AccessControl" : "PublicRead",
+        "BucketName" : { "Ref" : "s3bucketname" }
+      }
+    }
+  }
+}
