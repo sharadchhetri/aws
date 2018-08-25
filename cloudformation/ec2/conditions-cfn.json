@@ -69,7 +69,7 @@
         "Condition" : "ProdOrStagResources",
         "Properties" : {
           "ImageId" : { "Fn::FindInMap": [ "EC2AmazonAMI64HVM", { "Ref" : "AWS::Region" }, "AMI" ]},
-          "SecurityGroups" : [ {"Ref" : "PublicWebServerSG"} ],
+          "SecurityGroupIds" : [ {"Ref" : "PublicWebServerSG"} ],
             "InstanceType" : { "Ref" : "WebServerInstances" },
             "KeyName" : { "Ref" : "KeyPairParameter" },
             "Tags" : [{
@@ -83,7 +83,7 @@
           "Condition" : "CreateProdResources",
           "Properties" : {
             "ImageId" : { "Fn::FindInMap": [ "EC2AmazonAMI64HVM", { "Ref" : "AWS::Region" }, "AMI" ]},
-            "SecurityGroups" : [ {"Ref" : "PublicWebServerSG"} ],
+            "SecurityGroupIds" : [ {"Ref" : "PublicWebServerSG"} ],
             "InstanceType" : { "Ref" : "DBServerInstances" },
             "KeyName" : { "Ref" : "KeyPairParameter" },
             "Tags" : [{
