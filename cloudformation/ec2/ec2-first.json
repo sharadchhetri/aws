@@ -37,7 +37,7 @@
         "Type" : "AWS::EC2::Instance",
         "Properties" : {
           "ImageId" : { "Fn::FindInMap": [ "EC2AmazonAMI64HVM", { "Ref" : "AWS::Region" }, "AMI" ]},
-          "SecurityGroups" : [ {"Ref" : "PublicWebServerSG"} ],
+          "SecurityGroupIds" : [ {"Ref" : "PublicWebServerSG"} ],
           "InstanceType" : { "Ref" : "WebServerInstances" },
           "KeyName" : { "Ref" : "KeyPairParameter" },
           "Tags" : [{
