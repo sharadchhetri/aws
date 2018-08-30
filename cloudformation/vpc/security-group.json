@@ -1,0 +1,92 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Description": "CFT - security group",
+    "Metadata": {
+
+    },
+    "Parameters": {
+      "Environment": {
+        "Type": "String",
+        "Description": "Select Environment",
+        "Default": "dev",
+        "AllowedValues": ["prod","qa","dev"]
+      },
+      "vpc": {
+        "Type": "String",
+        "Description": "VPC id"
+      }
+    },
+    "Mappings": {
+
+    },
+    "Conditions": {
+
+    },
+    "Resources": {
+      "WebserverSG01": {
+        "Type" : "AWS::EC2::SecurityGroup",
+        "Properties": {
+          "GroupDescription" : "Allow http to client host",
+          "VpcId" : {"Ref" : "vpc"},
+          "SecurityGroupIngress" : [
+            {"IpProtocol" : "tcp","FromPort" : 80,"ToPort" : 80,"CidrIp" : "0.0.0.0/0"}
+          ],
+          "SecurityGroupEgress" : [
+            { "IpProtocol" : "tcp","FromPort" : 80, "ToPort" : 80, "CidrIp" : "0.0.0.0/0"}
+          ],
+          "Tags": [
+            { "Key": "Name", "Value":  "WebserverSG01" }
+          ]
+        }
+      },
+      "AppserverSG01": {
+        "Type" : "AWS::EC2::SecurityGroup",
+        "Properties": {
+          "GroupDescription" : "Allow http to client host",
+          "VpcId" : {"Ref" : "vpc"},
+          "SecurityGroupIngress" : [
+            {"IpProtocol" : "tcp","FromPort" : 443,"ToPort" : 443,"CidrIp" : "0.0.0.0/0"}
+          ],
+          "SecurityGroupEgress" : [
+            { "IpProtocol" : "tcp","FromPort" : 443, "ToPort" : 443, "CidrIp" : "0.0.0.0/0"}
+          ],
+          "Tags": [
+            { "Key": "Name", "Value":  "AppserverSG01" }
+          ]
+        }
+      },
+      "JumpboxserverSG01": {
+        "Type" : "AWS::EC2::SecurityGroup",
+        "Properties": {
+          "GroupDescription" : "Allow http to client host",
+          "VpcId" : {"Ref" : "vpc"},
+          "SecurityGroupIngress" : [
+            {"IpProtocol" : "tcp","FromPort" : 22,"ToPort" : 22,"CidrIp" : "0.0.0.0/0"}
+          ],
+          "SecurityGroupEgress" : [
+            { "IpProtocol" : "tcp","FromPort" : 22, "ToPort" : 22, "CidrIp" : "0.0.0.0/0"}
+          ],
+          "Tags": [
+            { "Key": "Name", "Value":  "JumpSererSG01" }
+          ]
+        }
+      },
+      "jumboxIngress":  {
+        "Type": "AWS::EC2::SecurityGroupIngress",
+        "Properties": {
+          "GroupId": { "Fn::GetAtt": [ "JumpboxserverSG01","GroupId" ] },
+          "IpProtocol": "tcp",
+          "FromPort": 80,
+          "ToPort": 80,
+          "SourceSecurityGroupId": [
+            { "Fn::GetAtt": [ "AppserverSG01","GroupId" ] },
+            { "Fn::GetAtt": [ "JumpboxserverSG01","GroupId" ] }
+          ]
+        }
+      }
+    },
+
+    "Outputs": {
+
+    }
+}

@@ -27,7 +27,19 @@
     },
     "AZ": {
       "Type": "List<AWS::EC2::AvailabilityZone::Name>",
-      "Description": "Select Availability Zone"  
+      "Description": "Select Availability Zone"
+    },
+    "KeyPairParameter" : {
+      "Type" : "AWS::EC2::KeyPair::KeyName",
+      "ConstraintDescription" : "KeyPair should exist in this region"
+    }
+  },
+  "Mappings" : {
+    "EC2AmazonAMI64HVM" : {
+      "ap-south-1" : { "AMI" : "ami-531a4c3c" },
+      "ap-southeast-1" : { "AMI" : "ami-68097514" },
+      "us-east-1" : { "AMI" : "ami-97785bed" },
+      "us-west-1" : { "AMI" : "ami-824c4ee2" }
     }
   },
   "Resources": {
@@ -93,6 +105,7 @@
       "Properties": {
         "Tags": [
           { "Key": "Name","Value": "IGW001"},
+          { "Key": "Desc","Value": "Internet Gateway"},
           {"Key": "Environment", "Value": {"Ref": "Environment"}}
         ]
       }
@@ -113,7 +126,7 @@
         "GatewayId" : { "Ref" : "IGW001" }
       }
     },
-    
+
     "PublicSubnet01": {
       "Type": "AWS::EC2::Subnet",
       "Properties": {
@@ -210,36 +223,36 @@
         }]
       }
     },
-    
+
     "PublicSubnetRTAssoc01": {
       "Type": "AWS::EC2::SubnetRouteTableAssociation",
       "Properties": {
         "SubnetId": {"Ref": "PublicSubnet01"},
-        "RouteTableId": {"Ref": "PublicRT001"}      
+        "RouteTableId": {"Ref": "PublicRT001"}
       }
     },
     "PublicSubnetRTAssoc02": {
       "Type": "AWS::EC2::SubnetRouteTableAssociation",
       "Properties": {
         "SubnetId": {"Ref": "PublicSubnet02"},
-        "RouteTableId": {"Ref": "PublicRT001"}      
+        "RouteTableId": {"Ref": "PublicRT001"}
       }
     },
     "PublicSubnetRTAssoc03": {
       "Type": "AWS::EC2::SubnetRouteTableAssociation",
       "Properties": {
         "SubnetId": {"Ref": "PublicSubnet03"},
-        "RouteTableId": {"Ref": "PublicRT002"}      
+        "RouteTableId": {"Ref": "PublicRT002"}
       }
     },
     "PublicSubnetRTAssoc04": {
       "Type": "AWS::EC2::SubnetRouteTableAssociation",
       "Properties": {
         "SubnetId": {"Ref": "PublicSubnet04"},
-        "RouteTableId": {"Ref": "PublicRT002"}      
+        "RouteTableId": {"Ref": "PublicRT002"}
       }
     },
-    
+
     "PrivateSubnetRTAssoc01": {
       "Type": "AWS::EC2::SubnetRouteTableAssociation",
       "Properties": {
@@ -268,6 +281,12 @@
         "RouteTableId": {"Ref":"PrivateRT002"}
       }
     }
-
+  },
+  "Outputs": {
+    "VpcID" : {
+      "Description": "VPC ID",
+      "Value" : { "Ref" : "vpc" },
+      "Export" : { "Name" : {"Fn::Sub": "${AWS::StackName}-VpcID" }}
+    }
   }
 }

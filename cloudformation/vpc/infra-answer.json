@@ -2,9 +2,21 @@
     {
       "ParameterKey": "Environment",
       "ParameterValue": "dev"
-    }, 
+    },
     {
       "ParameterKey": "AZ",
-      "ParameterValue": "us-east-1a,us-east-1b"
+      "ParameterValue": "us-east-2a,us-east-2b"
+    },
+    {
+      "ParameterKey": "KeyPairParameter",
+      "ParameterValue": "sharad-ohio"
+    },
+    {
+      "ParameterKey": "CftTemplateVPC",
+      "ParameterValue": "https://s3.us-east-2.amazonaws.com/sharad-newcform/infra.json"
+    },
+    {
+      "ParameterKey": "CftTemplateSG",
+      "ParameterValue": "https://s3.us-east-2.amazonaws.com/sharad-newcform/security-group.json"
     }
   ]

@@ -1,0 +1,51 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Description": "",
+    "Parameters": {
+      "Environment": {
+        "Type": "String",
+        "Description": "Select Environment - dev|prod|stag"
+      },
+      "AZ": {
+        "Type": "String",
+        "Description": "Select Availability Zone"
+      },
+      "KeyPairParameter" : {
+        "Type" : "String",
+        "ConstraintDescription" : "KeyPair should exist in this region"
+      },
+      "CftTemplateVPC": {
+        "Type": "String",
+        "Description": "CFT Template URL of VPC"
+      },
+      "CftTemplateSG": {
+        "Type": "String",
+        "Description": "CFT Template URL of VPC"
+      }
+    },
+    "Resources": {
+      "myStackWithParams" : {
+        "Type" : "AWS::CloudFormation::Stack",
+        "Properties" : {
+          "TemplateURL" : {"Ref":"CftTemplateVPC"},
+          "Parameters" : {
+            "Environment": {"Ref":"Environment"},
+            "AZ" : {"Ref":"AZ"},
+            "KeyPairParameter": {"Ref":"KeyPairParameter"}
+          }
+        }
+      },
+      "SGStackWithParams" : {
+        "Type" : "AWS::CloudFormation::Stack",
+        "Properties" : {
+          "TemplateURL" : {"Ref":"CftTemplateSG"},
+          "Parameters" : {
+            "Environment": {"Ref":"Environment"},
+            "vpc" : { "Fn::GetAtt" : [ "myStackWithParams", "Outputs.VpcID" ] }
+          }
+        }
+      }
+    },
+    "Outputs": {
+    }
+}
