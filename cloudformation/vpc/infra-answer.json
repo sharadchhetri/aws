@@ -13,10 +13,10 @@
     },
     {
       "ParameterKey": "CftTemplateVPC",
-      "ParameterValue": "https://s3.us-east-2.amazonaws.com/sharad-newcform/infra.json"
+      "ParameterValue": "https://s3.us-east-2.amazonaws.com/your-s3bucket/infra.json"
     },
     {
       "ParameterKey": "CftTemplateSG",
-      "ParameterValue": "https://s3.us-east-2.amazonaws.com/sharad-newcform/security-group.json"
+      "ParameterValue": "https://s3.us-east-2.amazonaws.com/your-s3bucket/security-group.json"
     }
   ]

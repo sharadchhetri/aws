@@ -78,10 +78,7 @@
           "IpProtocol": "tcp",
           "FromPort": 80,
           "ToPort": 80,
-          "SourceSecurityGroupId": [
-            { "Fn::GetAtt": [ "AppserverSG01","GroupId" ] },
-            { "Fn::GetAtt": [ "JumpboxserverSG01","GroupId" ] }
-          ]
+          "SourceSecurityGroupId": { "Fn::GetAtt": [ "AppserverSG01","GroupId" ] }
         }
       }
     },
