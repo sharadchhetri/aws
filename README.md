@@ -1,5 +1,5 @@
 # aws
-AWS related stuff <br>
+AWS related stuff like Cloudformation, python boto3 scripts etc.  <br>
 email: admin@sharadchhetri.com <br>
 Blog: http://sharadchhetri.com
 
